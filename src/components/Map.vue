@@ -11,43 +11,51 @@ import track from "./../assets/tracks/tor.gpx";
 export default {
   data() {
     return {
-      data: null
+      data: null,
+      map: null
     };
   },
   mounted() {
-    var map = L.map("map").setView([10, 0], 2);
-    L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution:
-        'Map data &copy; <a href="http://www.osm.org">OpenStreetMap</a>'
-    }).addTo(map);
+    this.load_map();
 
-    new L.GPX(track, {
-      async: true,
-      polyline_options: {
-        color: "blue",
-        opacity: 0.6,
-        weight: 5,
-        lineCap: "round"
-      },
-      gpx_options: {
-        parseElements: ["track"],
-        joinTrackSegments: false
-      }
-      // marker_options: {
-      //   startIconUrl: "images/start.png",
-      //   endIconUrl: "images/finish.png",
-      //   shadowUrl: "images/pin-shadow.png"
-      // }
-    })
-      .on("loaded", function(e) {
-        console.log("HERE");
+    this.load_track(track);
 
-        map.fitBounds(e.target.getBounds());
-        console.log(e.target.get_name());
+    this.map.on("zoomend", function() {});
+  },
+  methods: {
+    load_map() {
+      this.map = L.map("map").setView([10, 0], 2);
+      L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution:
+          'Map data &copy; <a href="http://www.osm.org">OpenStreetMap</a>'
+      }).addTo(this.map);
+      return this.map;
+    },
+    load_track(track) {
+      let vm = this;
+      new L.GPX(track, {
+        async: true,
+        polyline_options: {
+          color: "blue",
+          opacity: 0.6,
+          weight: 5,
+          lineCap: "round"
+        },
+        gpx_options: {
+          parseElements: ["track"],
+          joinTrackSegments: false
+        }
+        // marker_options: {
+        //   startIconUrl: "images/start.png",
+        //   endIconUrl: "images/finish.png",
+        //   shadowUrl: "images/pin-shadow.png"
+        // }
       })
-      .addTo(map);
-
-    map.on("zoomend", function() {});
+        .on("loaded", function(e) {
+          vm.map.fitBounds(e.target.getBounds());
+        })
+        .addTo(this.map);
+    }
   }
 };
 </script>
