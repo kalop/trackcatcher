@@ -18,6 +18,7 @@
 
 
 <script>
+// import Map from "../components/Map";
 import Map from "../components/Map";
 import FilterSearch from "../components/FilterSearch";
 import List from "../components/List";

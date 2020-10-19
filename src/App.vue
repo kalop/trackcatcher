@@ -35,8 +35,3 @@
   </v-app>
 </template>
 
-<style>
-html {
-  overflow: hidden;
-}
-</style>
