@@ -5,8 +5,8 @@
 <script>
 // import L from "leaflet";
 import L from "leaflet-gpx";
-import track from "./../assets/tracks/tor.gpx";
-// import track from "./../assets/tracks/terrassa_calella.gpx";
+// import track from "@/assets/tracks/tor.gpx";
+import track from "./../assets/tracks/terrassa_calella.gpx";
 
 export default {
   data() {
