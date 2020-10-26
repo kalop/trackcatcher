@@ -3,24 +3,33 @@
 </template>
 
 <script>
-// import L from "leaflet";
+// import * as LE from "leaflet";
 import L from "leaflet-gpx";
-// import track from "@/assets/tracks/tor.gpx";
-import track from "./../assets/tracks/terrassa_calella.gpx";
+import contrabandistes from "@/assets/tracks/tor.gpx";
+import terrassa_calella from "@/assets/tracks/terrassa_calella.gpx";
+import Eurotrail_spain from "@/assets/tracks/Eurotrail_spain.gpx";
+import Motobits from "@/assets/tracks/Motobits-Cervera.gpx";
 
 export default {
+  props: ["track_to_render"],
   data() {
     return {
       data: null,
-      map: null
+      map: null,
+      track: null
     };
   },
   mounted() {
     this.load_map();
 
+    let track = this.get_track();
     this.load_track(track);
 
-    this.map.on("zoomend", function() {});
+    let vm = this;
+    this.map.on("zoomend", function() {
+      console.log(vm.track);
+      console.log(vm.track_to_render);
+    });
   },
   methods: {
     load_map() {
@@ -30,6 +39,21 @@ export default {
           'Map data &copy; <a href="http://www.osm.org">OpenStreetMap</a>'
       }).addTo(this.map);
       return this.map;
+    },
+    get_track() {
+      console.log("track to render:" + this.track_to_render);
+
+      switch (this.track_to_render) {
+        case "contrabandistes":
+          return contrabandistes;
+        case "terrassa_calella":
+          return terrassa_calella;
+        case "Eurotrail_spain":
+          return Eurotrail_spain;
+        case "Motobits":
+          return Motobits;
+        default:
+      }
     },
     load_track(track) {
       let vm = this;
@@ -46,9 +70,17 @@ export default {
           joinTrackSegments: false
         }
         // marker_options: {
-        //   startIconUrl: "images/start.png",
-        //   endIconUrl: "images/finish.png",
-        //   shadowUrl: "images/pin-shadow.png"
+        //   wptIcons: {
+        //     "Coffee shop": new L.AwesomeMarkers.icon({
+        //       icon: "coffee",
+        //       prefix: "fa",
+        //       markerColor: "blue",
+        //       iconColor: "white"
+        //     })
+        //   }
+        //   // startIconUrl: "images/start.png",
+        //   // endIconUrl: "images/finish.png",
+        //   // shadowUrl: "images/pin-shadow.png"
         // }
       })
         .on("loaded", function(e) {

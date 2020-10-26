@@ -6,10 +6,10 @@
       </div>
       <div id="middle-offset">
         <div id="left-side">
-          <List />
+          <List @hover="onHoverItem" />
         </div>
         <div id="right-side">
-          <Map />
+          <Map :track_to_render="track" :key="track" />
         </div>
       </div>
     </div>
@@ -31,9 +31,15 @@ export default {
     FilterSearch,
     List
   },
+  methods: {
+    onHoverItem(track) {
+      this.track = track;
+    }
+  },
 
   data: () => ({
-    drawer: null
+    drawer: null,
+    track: "test"
   })
 };
 </script>
