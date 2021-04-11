@@ -9,6 +9,8 @@ import contrabandistes from "@/assets/tracks/tor.gpx";
 import terrassa_calella from "@/assets/tracks/terrassa_calella.gpx";
 import Eurotrail_spain from "@/assets/tracks/Eurotrail_spain.gpx";
 import Motobits from "@/assets/tracks/Motobits-Cervera.gpx";
+import terrassa_rellinars from "@/assets/tracks/terrassa_rellinars.gpx";
+import matadepera from "@/assets/tracks/matadepera.gpx";
 
 export default {
   props: ["track_to_render"],
@@ -16,24 +18,33 @@ export default {
     return {
       data: null,
       map: null,
-      track: null
+      track: null,
+      layer: null
     };
   },
   mounted() {
     this.load_map();
-
     let track = this.get_track();
     this.load_track(track);
 
-    let vm = this;
+    // let vm = this;
     this.map.on("zoomend", function() {
-      console.log(vm.track);
-      console.log(vm.track_to_render);
+      // console.log(vm.track);
+      // console.log(vm.track_to_render);
     });
   },
+  watch: {
+    track_to_render(newVal, oldVal) {
+      console.log("watcher track_to_render:", newVal, oldVal);
+      this.layer.remove();
+      let track = this.get_track();
+      this.load_track(track);
+    }
+  },
   methods: {
-    load_map() {
-      this.map = L.map("map").setView([10, 0], 2);
+    load_map(lat = 10, lng = 0, zoom = 2) {
+      console.log("load_map");
+      this.map = L.map("map").setView([lat, lng], zoom);
       L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution:
           'Map data &copy; <a href="http://www.osm.org">OpenStreetMap</a>'
@@ -52,12 +63,16 @@ export default {
           return Eurotrail_spain;
         case "Motobits":
           return Motobits;
+        case "Rellinars":
+          return terrassa_rellinars;
+        case "Matadepera":
+          return matadepera;
         default:
       }
     },
     load_track(track) {
-      let vm = this;
-      new L.GPX(track, {
+      // let vm = this;
+      this.layer = new L.GPX(track, {
         async: true,
         polyline_options: {
           color: "blue",
@@ -83,11 +98,13 @@ export default {
         //   // shadowUrl: "images/pin-shadow.png"
         // }
       })
-        .on("loaded", function(e) {
-          vm.map.fitBounds(e.target.getBounds());
-        })
+        // .on("loaded", function(e) {
+        //   console.log("LAYER: ", vm.layer);
+        //   vm.map.fitBounds(e.target.getBounds());
+        // })
         .addTo(this.map);
-    }
+    },
+    start() {}
   }
 };
 </script>

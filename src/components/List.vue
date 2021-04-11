@@ -24,8 +24,10 @@ export default {
       items: [
         { message: "contrabandistes" },
         { message: "terrassa_calella" },
-        { message: "Eurotrail_spain" },
-        { message: "Motobits" }
+        { message: "Motobits" },
+        { message: "Rellinars" },
+        { message: "Matadepera" },
+        { message: "Eurotrail_spain" }
       ],
       hover: false
     };

@@ -9,7 +9,8 @@
           <List @hover="onHoverItem" />
         </div>
         <div id="right-side">
-          <Map :track_to_render="track" :key="track" />
+          <!-- <Map :track_to_render="track" :key="track" /> -->
+          <Map :track_to_render="track" />
         </div>
       </div>
     </div>
@@ -18,7 +19,6 @@
 
 
 <script>
-// import Map from "../components/Map";
 import Map from "../components/Map";
 import FilterSearch from "../components/FilterSearch";
 import List from "../components/List";
