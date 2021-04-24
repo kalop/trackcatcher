@@ -2,7 +2,7 @@
   <div class="home">
     <div id="middle">
       <div id="filter-layout">
-        <FilterSearch />
+        <FilterSearch @optionsChecked="onOptionsChanged" />
       </div>
       <div id="middle-offset">
         <div id="left-side">
@@ -10,7 +10,7 @@
         </div>
         <div id="right-side">
           <!-- <Map :track_to_render="track" :key="track" /> -->
-          <Map :track_to_render="track" />
+          <Map :track_to_render="track" :optionsChecked="optionsChecked" />
         </div>
       </div>
     </div>
@@ -34,12 +34,16 @@ export default {
   methods: {
     onHoverItem(track) {
       this.track = track;
+    },
+    onOptionsChanged(optionsChecked) {
+      this.optionsChecked = optionsChecked;
     }
   },
 
   data: () => ({
     drawer: null,
-    track: "test"
+    track: "test",
+    optionsChecked: []
   })
 };
 </script>

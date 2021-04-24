@@ -13,13 +13,14 @@ import terrassa_rellinars from "@/assets/tracks/terrassa_rellinars.gpx";
 import matadepera from "@/assets/tracks/matadepera.gpx";
 
 export default {
-  props: ["track_to_render"],
+  props: ["track_to_render", "optionsChecked"],
   data() {
     return {
       data: null,
       map: null,
       track: null,
-      layer: null
+      layer: null,
+      fit_bounds: false
     };
   },
   mounted() {
@@ -34,11 +35,17 @@ export default {
     });
   },
   watch: {
-    track_to_render(newVal, oldVal) {
-      console.log("watcher track_to_render:", newVal, oldVal);
+    track_to_render() {
       this.layer.remove();
       let track = this.get_track();
       this.load_track(track);
+    },
+    optionsChecked(newVal) {
+      if (newVal.includes("fit_bounds_selected")) {
+        this.fit_bounds = true;
+      } else {
+        this.fit_bounds = false;
+      }
     }
   },
   methods: {
@@ -71,7 +78,7 @@ export default {
       }
     },
     load_track(track) {
-      // let vm = this;
+      let vm = this;
       this.layer = new L.GPX(track, {
         async: true,
         polyline_options: {
@@ -97,12 +104,15 @@ export default {
         //   // endIconUrl: "images/finish.png",
         //   // shadowUrl: "images/pin-shadow.png"
         // }
-      })
-        // .on("loaded", function(e) {
-        //   console.log("LAYER: ", vm.layer);
-        //   vm.map.fitBounds(e.target.getBounds());
-        // })
-        .addTo(this.map);
+      });
+
+      if (this.fit_bounds) {
+        this.layer.on("loaded", function(e) {
+          vm.map.fitBounds(e.target.getBounds());
+        });
+      }
+
+      this.layer.addTo(this.map);
     },
     start() {}
   }
