@@ -13,7 +13,7 @@ import terrassa_rellinars from "@/assets/tracks/terrassa_rellinars.gpx";
 import matadepera from "@/assets/tracks/matadepera.gpx";
 
 export default {
-  props: ["track_to_render", "optionsChecked"],
+  props: ["trackToRender", "optionsChecked"],
   data() {
     return {
       data: null,
@@ -24,21 +24,21 @@ export default {
     };
   },
   mounted() {
-    this.load_map();
-    let track = this.get_track();
-    this.load_track(track);
+    this.loadMap();
+    let track = this.getTrack();
+    this.loadTrack(track);
 
     // let vm = this;
     this.map.on("zoomend", function() {
       // console.log(vm.track);
-      // console.log(vm.track_to_render);
+      // console.log(vm.trackToRender);
     });
   },
   watch: {
-    track_to_render() {
+    trackToRender() {
       this.layer.remove();
-      let track = this.get_track();
-      this.load_track(track);
+      let track = this.getTrack();
+      this.loadTrack(track);
     },
     optionsChecked(newVal) {
       if (newVal.includes("fit_bounds_selected")) {
@@ -49,8 +49,8 @@ export default {
     }
   },
   methods: {
-    load_map(lat = 10, lng = 0, zoom = 2) {
-      console.log("load_map");
+    loadMap(lat = 10, lng = 0, zoom = 2) {
+      console.log("loadMap");
       this.map = L.map("map").setView([lat, lng], zoom);
       L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution:
@@ -58,10 +58,10 @@ export default {
       }).addTo(this.map);
       return this.map;
     },
-    get_track() {
-      console.log("track to render:" + this.track_to_render);
+    getTrack() {
+      console.log("track to render:" + this.trackToRender);
 
-      switch (this.track_to_render) {
+      switch (this.trackToRender) {
         case "contrabandistes":
           return contrabandistes;
         case "terrassa_calella":
@@ -77,7 +77,7 @@ export default {
         default:
       }
     },
-    load_track(track) {
+    loadTrack(track) {
       let vm = this;
       this.layer = new L.GPX(track, {
         async: true,

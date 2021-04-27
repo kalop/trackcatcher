@@ -9,8 +9,8 @@
           <List @hover="onHoverItem" />
         </div>
         <div id="right-side">
-          <!-- <Map :track_to_render="track" :key="track" /> -->
-          <Map :track_to_render="track" :optionsChecked="optionsChecked" />
+          <!-- <Map :trackToRender="track" :key="track" /> -->
+          <Map :trackToRender="track" :optionsChecked="optionsChecked" />
         </div>
       </div>
     </div>
