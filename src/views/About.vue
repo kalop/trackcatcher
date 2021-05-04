@@ -16,6 +16,11 @@
 
 <script>
 import axios from "axios";
+// import togeojson from "togeojson";
+// import jsdom from "jsdom";
+let gpxParser = require("gpxparser");
+// let fs = require("fs");
+
 export default {
   name: "TestFile",
   data: () => ({
@@ -25,25 +30,47 @@ export default {
   methods: {
     onFileSelected(event) {
       console.log(event);
-
       this.selectedFile = event;
     },
     onUpload() {
-      const fd = new FormData();
-      // fd.append("image", this.selectedFile, this.selectedFile.name);
-      fd.append("name", "track_01");
-      // fd.append("track", '{"test":"test"}');
-      var querystring = require("querystring");
+      console.log("READ FILE");
 
-      // axios
-      // .post(
-      //   "http://localhost:1337/tracks", fd,...
+      this.uploadTrack(function(err, content) {
+        if (err) throw err;
+        console.log(content);
+      });
+    },
+    readContent(callback) {
+      console.log(this.selectedFile);
 
-      axios
-        .post(
-          "http://localhost:1337/tracks",
-          querystring.stringify({ name: "track01" }),
-          {
+      let reader = new FileReader();
+      reader.readAsText(this.selectedFile, "UTF-8");
+      reader.onload = evt => {
+        callback(null, evt.target.result);
+      };
+    },
+    parseGPX(callback) {
+      this.readContent(function(err, content) {
+        let gpx = new gpxParser();
+        gpx.parse(content);
+        let geoJSON = gpx.toGeoJSON();
+        callback(null, geoJSON);
+      });
+    },
+    uploadTrack(callback) {
+      let self = this;
+      this.parseGPX(function(err, jsonGPX) {
+        if (err) throw err;
+        let querystring = require("querystring");
+        let url = "http://localhost:1337/tracks";
+        // let url = "https://enx1stb75vfxdtc.m.pipedream.net";
+
+        let aux = { name: "track01", track: jsonGPX };
+        console.log(aux);
+        console.log(querystring.stringify(aux));
+
+        axios
+          .post(url, aux, {
             onUploadProgress: uploadEvent => {
               console.log(
                 "Upload Progress: " +
@@ -51,13 +78,13 @@ export default {
                   "%"
               );
             }
-          }
-        )
-        .then(res => {
-          console.log(res);
-          this.$refs.fileInput.reset();
-          this.show_alert = true;
-        });
+          })
+          .then(res => {
+            self.$refs.fileInput.reset();
+            self.show_alert = true;
+            callback(null, res);
+          });
+      });
     }
   }
 };

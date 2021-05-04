@@ -10,10 +10,14 @@
   "dependencies": {
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "fs": "0.0.1-security",
+    "gpxparser": "^3.0.7",
+    "jsdom": "^16.5.3",
     "leaflet": "^1.7.1",
     "leaflet-gpx": "^1.5.0",
     "raw-loader": "^4.0.2",
     "register-service-worker": "^1.7.1",
+    "togeojson": "^0.16.0",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
     "vuetify": "^2.4.11"
