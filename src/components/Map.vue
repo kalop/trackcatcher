@@ -5,12 +5,7 @@
 <script>
 // import * as LE from "leaflet";
 import L from "leaflet-gpx";
-import contrabandistes from "@/assets/tracks/tor.gpx";
-import terrassa_calella from "@/assets/tracks/terrassa_calella.gpx";
-import Eurotrail_spain from "@/assets/tracks/Eurotrail_spain.gpx";
-import Motobits from "@/assets/tracks/Motobits-Cervera.gpx";
-import terrassa_rellinars from "@/assets/tracks/terrassa_rellinars.gpx";
-import matadepera from "@/assets/tracks/matadepera.gpx";
+import togpx from "togpx";
 
 export default {
   props: ["trackToRender", "optionsChecked"],
@@ -28,16 +23,16 @@ export default {
     let track = this.getTrack();
     this.loadTrack(track);
 
-    // let vm = this;
-    this.map.on("zoomend", function() {
-      // console.log(vm.track);
-      // console.log(vm.trackToRender);
-    });
+    this.map.on("zoomend", function() {});
   },
   watch: {
     trackToRender() {
-      this.layer.remove();
+      if (this.layer) {
+        this.layer.remove();
+      }
       let track = this.getTrack();
+      console.log(track);
+
       this.loadTrack(track);
     },
     optionsChecked(newVal) {
@@ -59,27 +54,14 @@ export default {
       return this.map;
     },
     getTrack() {
-      console.log("track to render:" + this.trackToRender);
-
-      switch (this.trackToRender) {
-        case "contrabandistes":
-          return contrabandistes;
-        case "terrassa_calella":
-          return terrassa_calella;
-        case "Eurotrail_spain":
-          return Eurotrail_spain;
-        case "Motobits":
-          return Motobits;
-        case "Rellinars":
-          return terrassa_rellinars;
-        case "Matadepera":
-          return matadepera;
-        default:
-      }
+      console.log("track to render:" + this.trackToRender.name);
+      return this.trackToRender.track;
     },
     loadTrack(track) {
       let vm = this;
-      this.layer = new L.GPX(track, {
+
+      let gpx_track = togpx(track);
+      this.layer = new L.GPX(gpx_track, {
         async: true,
         polyline_options: {
           color: "blue",

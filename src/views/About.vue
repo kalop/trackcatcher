@@ -62,13 +62,12 @@ export default {
       this.parseGPX(function(err, jsonGPX) {
         if (err) throw err;
         let querystring = require("querystring");
-        let url = "http://localhost:1337/tracks";
+        let url = process.env.VUE_APP_API_URL_BASE.concat("/tracks");
         // let url = "https://enx1stb75vfxdtc.m.pipedream.net";
 
-        let aux = { name: "track01", track: jsonGPX };
+        let aux = { name: self.selectedFile.name, track: jsonGPX };
         console.log(aux);
         console.log(querystring.stringify(aux));
-
         axios
           .post(url, aux, {
             onUploadProgress: uploadEvent => {
