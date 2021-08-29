@@ -6,7 +6,9 @@
 // import * as LE from "leaflet";
 import L from "leaflet-gpx";
 import togpx from "togpx";
-
+import startIcon from "../assets/images/pin-icon-start.png";
+import endIcon from "../assets/images/pin-icon-end.png";
+import shadowIcon from "../assets/images/pin-shadow.png";
 export default {
   props: ["trackToRender", "optionsChecked"],
   data() {
@@ -72,20 +74,12 @@ export default {
         gpx_options: {
           parseElements: ["track"],
           joinTrackSegments: false
+        },
+        marker_options: {
+          startIconUrl: startIcon,
+          endIconUrl: endIcon,
+          shadowUrl: shadowIcon
         }
-        // marker_options: {
-        //   wptIcons: {
-        //     "Coffee shop": new L.AwesomeMarkers.icon({
-        //       icon: "coffee",
-        //       prefix: "fa",
-        //       markerColor: "blue",
-        //       iconColor: "white"
-        //     })
-        //   }
-        //   // startIconUrl: "images/start.png",
-        //   // endIconUrl: "images/finish.png",
-        //   // shadowUrl: "images/pin-shadow.png"
-        // }
       });
 
       if (this.fit_bounds) {

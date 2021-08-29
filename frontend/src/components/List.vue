@@ -1,7 +1,11 @@
 <template>
   <div>
     <!-- <v-row v-for="i in 100" :key="i" no-gutters style="height: 150px;"> -->
-    <v-row v-for="item in items" :key="item.name" style="height: 9em; width:100%">
+    <v-row
+      v-for="item in items"
+      :key="item.name"
+      style="height: 9em; width:100%"
+    >
       <v-col>
         <v-hover v-slot="{ hover }">
           <v-card
@@ -10,7 +14,8 @@
             class="pa-15"
             @mouseover="loadTrack(item)"
             tile
-          >Row {{ item.name }}</v-card>
+            >Row {{ item.name }}</v-card
+          >
         </v-hover>
       </v-col>
     </v-row>
@@ -42,7 +47,7 @@ export default {
     },
 
     loadTrack: function(track) {
-      console.log("loadTrack: " + track);
+      console.dir("loadTrack: " + track, { depth: null });
       this.$emit("hover", track);
     }
   }
