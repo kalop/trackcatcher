@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import { tracks } from "../../mockData/tracks";
 
 export default {
   data() {
@@ -37,13 +37,16 @@ export default {
   },
   methods: {
     getTracks: function() {
-      axios
-        .get(process.env.VUE_APP_API_URL_BASE.concat("/tracks"))
-        .then(res => {
-          res.data.forEach(element => {
-            this.items.push(element);
-          });
-        });
+      // axios
+      //   .get(process.env.VUE_APP_API_URL_BASE.concat("/tracks"))
+      //   .then(res => {
+      //     res.data.forEach(element => {
+      //       this.items.push(element);
+      //     });
+      //   });
+      tracks.forEach(element => {
+        this.items.push(element);
+      });
     },
 
     loadTrack: function(track) {

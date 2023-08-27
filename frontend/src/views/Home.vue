@@ -17,7 +17,6 @@
   </div>
 </template>
 
-
 <script>
 import Map from "../components/Map";
 import FilterSearch from "../components/FilterSearch";

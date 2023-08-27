@@ -26,7 +26,7 @@ export default {
   }
 };
 </script>
-<style  scoped>
+<style scoped>
 #barBox {
   background-color: yellow;
   height: 100%;

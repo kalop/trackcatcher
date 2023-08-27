@@ -9,8 +9,18 @@
       @change="onFileSelected"
       ref="fileInput"
     ></v-file-input>
-    <v-alert v-if="show_alert" dense outlined text type="success" ref="success_alert">Uploaded</v-alert>
-    <v-btn color="primary" elevation="2" outlined @click="onUpload">Upload</v-btn>
+    <v-alert
+      v-if="show_alert"
+      dense
+      outlined
+      text
+      type="success"
+      ref="success_alert"
+      >Uploaded</v-alert
+    >
+    <v-btn color="primary" elevation="2" outlined @click="onUpload"
+      >Upload</v-btn
+    >
   </div>
 </template>
 

@@ -2,10 +2,10 @@ module.exports = {
   transpileDependencies: ["vuetify"],
   chainWebpack: config => {
     config.module
-      .rule('gpx')
+      .rule("gpx")
       .test(/\.gpx$/)
-      .use('raw-loader')
-      .loader('raw-loader')
+      .use("raw-loader")
+      .loader("raw-loader")
       .end();
   }
 };
