@@ -1,11 +1,8 @@
-module.exports = {
-  transpileDependencies: ["vuetify"],
-  chainWebpack: config => {
-    config.module
-      .rule("gpx")
-      .test(/\.gpx$/)
-      .use("raw-loader")
-      .loader("raw-loader")
-      .end();
-  }
-};
+const { defineConfig } = require("@vue/cli-service");
+module.exports = defineConfig({
+  pluginOptions: {
+    vuetify: {
+      // https://github.com/vuetifyjs/vuetify-loader/tree/next/packages/vuetify-loader
+    },
+  },
+});
