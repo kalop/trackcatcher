@@ -1,4 +1,4 @@
-# frontend
+# Trackcatcher
 
 ## Project setup
 ```
