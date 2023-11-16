@@ -13,17 +13,15 @@
     </v-container>
     <v-container fluid>
       <v-row>
-        <v-col cols="2">
-          <v-switch label="Fit bounds track" color='secondary' v-model="fitBounds"></v-switch>
-        </v-col>
-      </v-row>
-    </v-container>
-    <v-container fluid>
-      <v-row>
         <v-col cols="3">
           <ListComponent />
         </v-col>
         <v-col cols="9">
+          <v-row class="d-flex justify-end">
+            <v-col cols="auto">
+              <v-switch label="Fit bounds track" color='secondary' v-model="fitBounds"></v-switch>
+            </v-col>
+          </v-row>
           <MapComponent />
         </v-col>
       </v-row>
