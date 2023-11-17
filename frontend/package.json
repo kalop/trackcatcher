@@ -1,5 +1,5 @@
 {
-  "name": "Trackcatcher",
+  "name": "trackcatcher",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -17,6 +17,7 @@
     "vuex": "^4.0.0"
   },
   "devDependencies": {
+    "@mdi/font": "^7.3.67",
     "@types/leaflet": "^1.9.6",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",

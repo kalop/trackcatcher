@@ -1,5 +1,5 @@
 <template>
-  <div ref='map' :style='{ height: "700px", width: "100%" }'></div>
+  <div ref='map' :style='{ height: "700px" }'></div>
 </template>
 
 <script lang='ts'>

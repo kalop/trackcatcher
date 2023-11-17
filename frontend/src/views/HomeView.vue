@@ -14,12 +14,15 @@
     <v-container fluid>
       <v-row>
         <v-col cols="3">
-          <ListComponent />
+          <ListComponent :expanded="listExpanded" @toggle-expand="toggleList"></ListComponent>
         </v-col>
-        <v-col cols="9">
-          <v-row class="d-flex justify-end">
+        <v-col :cols="listExpanded ? 9 : 12">
+          <v-row justify="space-between">
             <v-col cols="auto">
-              <v-switch label="Fit bounds track" color='secondary' v-model="fitBounds"></v-switch>
+              <v-icon @click="toggleExpand">{{ listExpanded ? 'mdi-close' : 'mdi-menu' }}</v-icon>
+            </v-col>
+            <v-col cols="auto">
+              <v-switch label="Fit bounds track" color="secondary" v-model="fitBounds"></v-switch>
             </v-col>
           </v-row>
           <MapComponent />
@@ -30,7 +33,7 @@
 </template>
 
 <script lang='ts'>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref } from 'vue';
 import ListComponent from '../components/ListComponent.vue';
 import MapComponent from '../components/MapComponent.vue';
 
@@ -38,24 +41,36 @@ export default defineComponent({
   name: 'HomeView',
   components: {
     ListComponent,
-    MapComponent
+    MapComponent,
   },
   setup() {
-    const fitBounds = ref(false)
-    const searchInput = ref('')
+    const fitBounds = ref(false);
+    const searchInput = ref('');
+    const listExpanded = ref(true);
+
+    const toggleList = () => {
+      listExpanded.value = !listExpanded.value;
+    };
+
+    const toggleExpand = () => {
+      listExpanded.value = !listExpanded.value;
+    };
 
     return {
       fitBounds,
-      searchInput
-    }
+      searchInput,
+      listExpanded,
+      toggleList,
+      toggleExpand
+    };
   },
   methods: {
     onUpload() {
-      console.log('Upload clicked!')
+      console.log('Upload clicked!');
     },
     onLogin() {
-      console.log('Login clicked!')
-    }
-  }
-})
+      console.log('Login clicked!');
+    },
+  },
+});
 </script>
