@@ -25,7 +25,7 @@
               <v-switch label="Fit bounds track" color="secondary" v-model="fitBounds"></v-switch>
             </v-col>
           </v-row>
-          <MapComponent />
+          <MapComponent :set-map-component-instance="setMapComponentInstance" />
         </v-col>
       </v-row>
     </v-container>
@@ -47,6 +47,7 @@ export default defineComponent({
     const fitBounds = ref(false);
     const searchInput = ref('');
     const listExpanded = ref(true);
+    let mapComponentInstance: any = null;
 
     const toggleList = () => {
       listExpanded.value = !listExpanded.value;
@@ -54,6 +55,13 @@ export default defineComponent({
 
     const toggleExpand = () => {
       listExpanded.value = !listExpanded.value;
+      if (mapComponentInstance) {
+        mapComponentInstance.resizeMap();
+      }
+    };
+
+    const setMapComponentInstance = (instance: any) => {
+      mapComponentInstance = instance;
     };
 
     return {
@@ -61,7 +69,8 @@ export default defineComponent({
       searchInput,
       listExpanded,
       toggleList,
-      toggleExpand
+      toggleExpand,
+      setMapComponentInstance
     };
   },
   methods: {
